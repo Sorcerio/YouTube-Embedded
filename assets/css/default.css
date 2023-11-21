@@ -22,6 +22,19 @@ body {
     background-color: black;
 }
 
+a {
+    color: white;
+    border-bottom: 1px dashed white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    background-color: white;
+    border-bottom: 1px solid white;
+    text-decoration: none;
+}
+
 button, input[type=submit] {
     cursor: pointer;
 }

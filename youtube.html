@@ -6,6 +6,42 @@
     <meta name="description" content="Run YouTube through an embedded interface.">
 
     <link rel="stylesheet" type="text/css" href="./assets/css/default.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/footer.css">
+
+    <style>
+        body {
+            position: relative;
+            height: 96vh;
+            margin: 0;
+            padding: 0px 8px;
+        }
+
+        footer {
+            position: absolute;
+            right: 8px;
+            bottom: 0;
+            width: 280px;
+            text-align: right;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer > div {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-content: flex-start;
+            align-items: flex-start;
+            margin-top: 8px;
+        }
+
+        footer > div > p {
+            padding-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <!--
@@ -71,6 +107,15 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>Created by <a href="https://mbmcloude.com">Marshall B McCloude</a></p>
+        <div>
+            <p><a href="https://github.com/Sorcerio" target="_blank">GitHub</a></p>
+            <p><a href="https://twitter.com/mbmcloude" target="_blank">X (Twitter)</a></p>
+            <p><a href="https://www.instagram.com/mbmcloude/" target="_blank">Instagram</a></p>
+        </div>
+    </footer>
 </body>
 <script src="./assets/js/playerPage.js" defer></script>
 </html>
