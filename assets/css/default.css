@@ -35,3 +35,19 @@ textarea {
     min-height: 142px;
     display: block;
 }
+
+.box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.box > div {
+    padding-left: 10px;
+}
+
+.box > div:first-of-type {
+    padding-left: 0;
+}

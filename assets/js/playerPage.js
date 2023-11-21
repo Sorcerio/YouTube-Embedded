@@ -2,12 +2,12 @@
 
 // On Window Load
 window.onload = function() {
-    // Set Form Submit Event
+    // Set Form Submit Events
     onYoutubeFormSubmit();
 
     // Update the video embed URL
-    var urlParams = new URLSearchParams(window.location.search);
-    var code = urlParams.get('code');
+    let urlParams = new URLSearchParams(window.location.search);
+    let code = urlParams.get('code');
 
     if (code !== null) {
         showYoutubeVideo(code);
@@ -16,16 +16,16 @@ window.onload = function() {
 
 // Events
 function onYoutubeFormSubmit() {
-    var form = document.getElementById('youtubeForm');
+    let form = document.getElementById('youtubeForm');
     form.onsubmit = function(e) {
         // Disabled default form submission
         e.preventDefault();
 
         // Get the codeInput element
-        var codeInput = document.getElementById('codeInput');
+        let codeInput = document.getElementById('codeInput');
 
         // Process the URL
-        var processedValue = processYoutubeUrl(codeInput.value);
+        let processedValue = processYoutubeUrl(codeInput.value);
 
         // Submit the form with the processed value or fail
         codeInput.value = processedValue;
@@ -33,12 +33,16 @@ function onYoutubeFormSubmit() {
     };
 }
 
+function onPlaylistFormSubmit() {
+    // TODO: this
+}
+
 // Example Buttons
 function submitExampleButton(url) {
-    var codeInput = document.getElementById('codeInput');
+    let codeInput = document.getElementById('codeInput');
     codeInput.value = processYoutubeUrl(url);
 
-    var form = document.getElementById('youtubeForm');
+    let form = document.getElementById('youtubeForm');
     form.submit();
 }
 
@@ -62,12 +66,12 @@ function processYoutubeUrl(url) { // Returns a YouTube Video Id
 }
 
 function processFullUrl(input) {
-    var videoId = input.split('v=')[1].split('&')[0];
+    let videoId = input.split('v=')[1].split('&')[0];
     return videoId;
 }
 
 function processShortUrl(input) {
-    var videoId = input.split('youtu.be/')[1].split('?')[0];
+    let videoId = input.split('youtu.be/')[1].split('?')[0];
     return videoId;
 }
 
@@ -75,11 +79,14 @@ function processShortUrl(input) {
 function showYoutubeVideo(code) {
     // Update the video embed URL
     // Example URL: https://www.youtube.com/embed/R-IhY4FkNLA?si=10TTHtRycXFBfXul
-    var youtubePlayer = document.getElementById('youtubePlayer');
+    let youtubePlayer = document.getElementById('youtubePlayer');
     youtubePlayer.src = 'https://www.youtube.com/embed/' + code + '?autoplay=1';
-    youtubePlayer.style.display = 'block';
+
+    // Show the player
+    let playerContainer = document.getElementById('playerContainer');
+    playerContainer.style.display = 'block';
 
     // Hide the instructions
-    var youtubePlayerInfo = document.getElementById('youtubePlayerInfo');
+    let youtubePlayerInfo = document.getElementById('youtubePlayerInfo');
     youtubePlayerInfo.style.display = 'none';
 }

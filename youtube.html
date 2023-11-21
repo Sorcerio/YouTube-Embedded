@@ -26,7 +26,7 @@
                 <form id="youtubeForm" action="" method="get" autocomplete="off">
                     <p id="youtubeFormError" style="display: none;">No errors</p>
 
-                    <input id="codeInput" type="text" name="code" placeholder="YouTube URL" autocomplete="off" required>
+                    <input id="codeInput" type="text" name="code" placeholder="https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2" autocomplete="off" required>
                     <input type="submit" value="Submit">
                 </form>
 
@@ -42,21 +42,14 @@
         <div>
             <h3>JSON Playlist</h3>
             <div>
-                <p>Add a JSON list of <i>non-age restricted</i> YouTube URLs or video id here.</p>
+                <p>Add a JSON list of <i>non-age restricted</i> YouTube URLs or video ids here.</p>
 
                 <form id="playlistForm" action="" method="get" autocomplete="off">
                     <p id="playlistFormError" style="display: none;">No errors</p>
 
-                    <textarea id="playlistInput" name="playlist" placeholder="JSON Playlist" autocomplete="off" required></textarea>
+                    <textarea id="playlistInput" name="playlist" placeholder="JSON Playlist" autocomplete="off" required>["R-IhY4FkNLA", "7HFKLGwcJY0", "8O--hSEUDvc"]</textarea>
                     <input type="submit" value="Submit">
                 </form>
-
-                <!-- <h4>Examples</h4>
-                <div>
-                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2">Ride the Ferryboat of the Mind</button>
-                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/7HFKLGwcJY0?si=joh4Cvg-nn9JzDSQ">Frosty Field</button>
-                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/8O--hSEUDvc?si=eb9OnCKNXA30TrMU">The Mind of the Reader</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -65,7 +58,16 @@
         <h2>Video</h2>
         <p id="youtubePlayerInfo">YouTube video will be displayed below.</p>
 
-        <iframe id="youtubePlayer" style="display: none;" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <div id="playerContainer" style="display: none;">
+            <iframe id="youtubePlayer" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+            <div id="playlistControls" style="display: none;">
+                <p>Video <span id="playlistCur">0</span> of <span id="playlistMax">0</span></p>
+
+                <button>Last Video</button>
+                <button>Next Video</button>
+            </div>
+        </div>
     </div>
 </body>
 <script src="./assets/js/playerPage.js" defer></script>
