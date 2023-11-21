@@ -5,13 +5,12 @@ window.onload = function() {
     // Set Form Submit Events
     onYoutubeFormSubmit();
 
-    // Update the video embed URL
+    // Fetch an GET parameters
     let urlParams = new URLSearchParams(window.location.search);
-    let code = urlParams.get('code');
 
-    if (code !== null) {
-        showYoutubeVideo(code);
-    }
+    // Check if content has already been selected
+    onLoadCheckForSingleVideo(urlParams);
+    onLoadCheckForPlaylist(urlParams);
 };
 
 // Events
@@ -33,8 +32,52 @@ function onYoutubeFormSubmit() {
     };
 }
 
-function onPlaylistFormSubmit() {
-    // TODO: this
+function onLoadCheckForSingleVideo(urlParams) {
+    // Try to get the video id
+    let code = urlParams.get('code');
+
+    // Use the video id if present
+    if (code !== null) {
+        showYoutubeVideo(code);
+    }
+}
+
+function onLoadCheckForPlaylist(urlParams) {
+    // Try to get the playlist params
+    let playlist = urlParams.get('playlist');
+    let playlistIndex = urlParams.get('index');
+
+    // Check if the playlist params are present
+    if (playlist !== null && playlistIndex !== null) {
+        // Update the playlist form
+        let playlistInput = document.getElementById('playlistInput');
+        playlistInput.innerText = playlist;
+
+        // Parse the playlist index
+        playlistIndex = parseInt(playlistIndex);
+
+        // Parse the JSON
+        playlist = JSON.parse(playlist);
+
+        // Get the video id
+        let code = processYoutubeUrl(playlist[playlistIndex]);
+
+        // Use the video id if present
+        if (code !== null) {
+            // Update the playlist controls
+            let playlistControls = document.getElementById('playlistControls');
+            playlistControls.style.display = 'block';
+
+            let playlistIndexCur = document.getElementById('playlistCur');
+            playlistIndexCur.innerText = playlistIndex + 1;
+
+            let playlistIndexMax = document.getElementById('playlistMax');
+            playlistIndexMax.innerText = playlist.length;
+
+            // Show the current video
+            // showYoutubeVideo(code); # TODO: renable!
+        }
+    }
 }
 
 // Example Buttons
@@ -48,11 +91,14 @@ function submitExampleButton(url) {
 
 // URL Processing
 function processYoutubeUrl(url) { // Returns a YouTube Video Id
+    // Report
+    console.log('Processing url: ' + url);
+
     let videoId;
-    if(url.includes('watch?v=')) {
+    if (url.includes('watch?v=')) {
         // Standard URL
         videoId = processFullUrl(url);
-    } else if(url.includes('youtu.be/')) {
+    } else if (url.includes('youtu.be/')) {
         // Short URL
         videoId = processShortUrl(url);
     } else {
@@ -60,7 +106,8 @@ function processYoutubeUrl(url) { // Returns a YouTube Video Id
         videoId = url;
     }
 
-    console.log('Playing Video Id: ' + videoId);
+    // Report
+    console.log('Collected Video Id: ' + videoId);
 
     return videoId;
 }
