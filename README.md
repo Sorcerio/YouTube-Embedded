@@ -11,6 +11,6 @@ This allows you to play any _non-age restricted_ video through an embedded playe
 
 ## How Do I Use This?
 
-1. Open [./youtube.html](./youtube.html).
+1. Open [./youtube.html](./youtube.html) in your browser.
 2. Supply an input as a video url or JSON playlist.
 3. Star the repository and enjoy your video.

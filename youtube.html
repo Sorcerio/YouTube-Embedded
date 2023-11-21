@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>YouTube with Ad Block</title>
-    <style>
-        body {
-            color: white;
-            background-color: black;
-        }
+    <title>YouTube Embedded</title>
 
-        button, input[type=submit] {
-            cursor: pointer;
-        }
-    </style>
+    <meta name="description" content="Run YouTube through an embedded interface.">
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/default.css">
 </head>
 <body>
     <!--
@@ -20,25 +14,50 @@
     `https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2`.
     -->
 
-    <h1>YouTube with Ad Block</h1>
+    <h1>YouTube Embedded</h1>
 
-    <div>
-        <h2>Input</h2>
-
-        <p>Add any <i>non-age restricted</i> YouTube URL here either from the video's Share button or from your browser's URL field.</p>
-
-        <form id="youtubeForm" action="" method="get" autocomplete="off">
-            <p id="youtubeFormError" style="display: none;">No errors</p>
-
-            <input id="codeInput" type="text" name="code" placeholder="YouTube URL" autocomplete="off" required>
-            <input type="submit" value="Submit">
-        </form>
-
-        <h3>Examples</h3>
+    <h2>Input</h2>
+    <div class="box">
         <div>
-            <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2">Ride the Ferryboat of the Mind</button>
-            <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/7HFKLGwcJY0?si=joh4Cvg-nn9JzDSQ">Frosty Field</button>
-            <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/8O--hSEUDvc?si=eb9OnCKNXA30TrMU">The Mind of the Reader</button>
+            <h3>Single Video</h3>
+            <div>
+                <p>Add any <i>non-age restricted</i> YouTube URL or video id here.</p>
+
+                <form id="youtubeForm" action="" method="get" autocomplete="off">
+                    <p id="youtubeFormError" style="display: none;">No errors</p>
+
+                    <input id="codeInput" type="text" name="code" placeholder="YouTube URL" autocomplete="off" required>
+                    <input type="submit" value="Submit">
+                </form>
+
+                <h4>Examples</h4>
+                <div>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2">Ride the Ferryboat of the Mind</button>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/7HFKLGwcJY0?si=joh4Cvg-nn9JzDSQ">Frosty Field</button>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/8O--hSEUDvc?si=eb9OnCKNXA30TrMU">The Mind of the Reader</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>JSON Playlist</h3>
+            <div>
+                <p>Add a JSON list of <i>non-age restricted</i> YouTube URLs or video id here.</p>
+
+                <form id="playlistForm" action="" method="get" autocomplete="off">
+                    <p id="playlistFormError" style="display: none;">No errors</p>
+
+                    <textarea id="playlistInput" name="playlist" placeholder="JSON Playlist" autocomplete="off" required></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+
+                <!-- <h4>Examples</h4>
+                <div>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/R-IhY4FkNLA?si=E8ZaQW_kYUZoT4T2">Ride the Ferryboat of the Mind</button>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/7HFKLGwcJY0?si=joh4Cvg-nn9JzDSQ">Frosty Field</button>
+                    <button onclick="submitExampleButton(this.getAttribute('video'))" video="https://youtu.be/8O--hSEUDvc?si=eb9OnCKNXA30TrMU">The Mind of the Reader</button>
+                </div> -->
+            </div>
         </div>
     </div>
 
@@ -49,91 +68,5 @@
         <iframe id="youtubePlayer" style="display: none;" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 </body>
-<script>
-    // On Window Load
-    window.onload = function() {
-        // Set Form Submit Event
-        onYoutubeFormSubmit();
-
-        // Update the video embed URL
-        var urlParams = new URLSearchParams(window.location.search);
-        var code = urlParams.get('code');
-
-        if (code !== null) {
-            showYoutubeVideo(code);
-        }
-    };
-
-    // Events
-    function onYoutubeFormSubmit() {
-        var form = document.getElementById('youtubeForm');
-        form.onsubmit = function(e) {
-            // Disabled default form submission
-            e.preventDefault();
-
-            // Get the codeInput element
-            var codeInput = document.getElementById('codeInput');
-
-            // Process the URL
-            var processedValue = processYoutubeUrl(codeInput.value);
-
-            // Submit the form with the processed value or fail
-            if(processedValue !== undefined) {
-                codeInput.value = processedValue;
-                form.submit();
-            } else {
-                // Show error
-                var errorElement = document.getElementById('youtubeFormError');
-                errorElement.style.display = 'block';
-                errorElement.innerHTML = 'Invalid URL';
-            }
-        };
-    }
-
-    // Example Buttons
-    function submitExampleButton(url) {
-        var codeInput = document.getElementById('codeInput');
-        codeInput.value = processYoutubeUrl(url);
-
-        var form = document.getElementById('youtubeForm');
-        form.submit();
-    }
-
-    // URL Processing
-    function processYoutubeUrl(url) {
-        if(url.includes('watch?v=')) {
-            // Standard URL
-            return processFullUrl(url);
-        } else if(url.includes('youtu.be/')) {
-            // Short URL
-            return processShortUrl(url);
-        } else {
-            // Invalid URL
-            return undefined;
-        }
-    }
-
-    function processFullUrl(input) {
-        var videoId = input.split('v=')[1].split('&')[0];
-        return videoId;
-    }
-
-    function processShortUrl(input) {
-        var videoId = input.split('youtu.be/')[1].split('?')[0];
-        return videoId;
-    }
-
-    // YouTube Player
-    function showYoutubeVideo(code) {
-        // Update the video embed URL
-        // Example URL: https://www.youtube.com/embed/R-IhY4FkNLA?si=10TTHtRycXFBfXul
-        var youtubePlayer = document.getElementById('youtubePlayer');
-        youtubePlayer.src = 'https://www.youtube.com/embed/' + code + '?autoplay=1';
-        youtubePlayer.style.display = 'block';
-
-        // Hide the instructions
-        var youtubePlayerInfo = document.getElementById('youtubePlayerInfo');
-        youtubePlayerInfo.style.display = 'none';
-    }
-</script>
+<script src="./assets/js/playerPage.js" defer></script>
 </html>

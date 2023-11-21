@@ -1,0 +1,37 @@
+/*
+    YouTube Embedded: Style Sheet
+    Style: Default
+*/
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(169, 169, 169, 0.5);
+    outline: 1px solid slategrey;
+}
+
+body {
+    font-family: monospace, sans-serif;
+    color: white;
+    background-color: black;
+}
+
+button, input[type=submit] {
+    cursor: pointer;
+}
+
+input {
+    display: block;
+}
+
+textarea {
+    min-width: 420px;
+    min-height: 142px;
+    display: block;
+}
