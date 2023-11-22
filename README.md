@@ -1,5 +1,7 @@
 # YouTube Embedded
 
+![YouTube Embedded header image](./assets/header.png)
+
 >
 > Why? Because there's a loop hole.
 >
