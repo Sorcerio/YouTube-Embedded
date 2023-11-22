@@ -7,41 +7,6 @@
 
     <link rel="stylesheet" type="text/css" href="./assets/css/default.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/footer.css">
-
-    <style>
-        body {
-            position: relative;
-            height: 96vh;
-            margin: 0;
-            padding: 0px 8px;
-        }
-
-        footer {
-            position: absolute;
-            right: 8px;
-            bottom: 0;
-            width: 280px;
-            text-align: right;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        footer > div {
-            display: flex;
-            flex-direction: row-reverse;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            align-content: flex-start;
-            align-items: flex-start;
-            margin-top: 8px;
-        }
-
-        footer > div > p {
-            padding-left: 10px;
-        }
-    </style>
 </head>
 <body>
     <!--
@@ -102,8 +67,8 @@
             <div id="playlistControls" style="display: none;">
                 <p>Video <span id="playlistCur">0</span> of <span id="playlistMax">0</span></p>
 
-                <button>Last Video</button>
-                <button>Next Video</button>
+                <button onclick="prevVideo()">Prev Video</button>
+                <button onclick="nextVideo()">Next Video</button>
             </div>
         </div>
     </div>

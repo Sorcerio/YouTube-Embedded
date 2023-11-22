@@ -1,5 +1,9 @@
 // YouTube Embedded: Player Page Operation
 
+// Global Variables
+var PLAYLIST = null;
+var PLAYLIST_INDEX = null;
+
 // On Window Load
 window.onload = function() {
     // Set Form Submit Events
@@ -49,34 +53,17 @@ function onLoadCheckForPlaylist(urlParams) {
 
     // Check if the playlist params are present
     if (playlist !== null && playlistIndex !== null) {
-        // Update the playlist form
-        let playlistInput = document.getElementById('playlistInput');
-        playlistInput.innerText = playlist;
-
         // Parse the playlist index
-        playlistIndex = parseInt(playlistIndex);
+        PLAYLIST_INDEX = parseInt(playlistIndex);
 
         // Parse the JSON
-        playlist = JSON.parse(playlist);
+        PLAYLIST = JSON.parse(playlist);
 
-        // Get the video id
-        let code = processYoutubeUrl(playlist[playlistIndex]);
+        // Update the playlist controls
+        updatePlaylistControls();
 
-        // Use the video id if present
-        if (code !== null) {
-            // Update the playlist controls
-            let playlistControls = document.getElementById('playlistControls');
-            playlistControls.style.display = 'block';
-
-            let playlistIndexCur = document.getElementById('playlistCur');
-            playlistIndexCur.innerText = playlistIndex + 1;
-
-            let playlistIndexMax = document.getElementById('playlistMax');
-            playlistIndexMax.innerText = playlist.length;
-
-            // Show the current video
-            // showYoutubeVideo(code); # TODO: renable!
-        }
+        // Play video if possible
+        playCurrentPlaylistVideo();
     }
 }
 
@@ -136,4 +123,83 @@ function showYoutubeVideo(code) {
     // Hide the instructions
     let youtubePlayerInfo = document.getElementById('youtubePlayerInfo');
     youtubePlayerInfo.style.display = 'none';
+
+    // Scroll to the player
+    youtubePlayer.scrollIntoView();
+}
+
+// Playlist Controls
+function updatePlaylistControls() {
+    // Check that a playlist was loaded
+    if (PLAYLIST === null || PLAYLIST_INDEX === null) {
+        console.log("Can't Update Playlist Controls: No playlist loaded")
+        return;
+    }
+
+    // Update the playlist form
+    let playlistInput = document.getElementById('playlistInput');
+    playlistInput.innerText = JSON.stringify(PLAYLIST);
+
+    let playlistIndex = document.getElementById('playlistIndex');
+    playlistIndex.value = PLAYLIST_INDEX;
+
+    // Update the playlist controls
+    let playlistControls = document.getElementById('playlistControls');
+    playlistControls.style.display = 'block';
+
+    let playlistIndexCur = document.getElementById('playlistCur');
+    playlistIndexCur.innerText = PLAYLIST_INDEX + 1;
+
+    let playlistIndexMax = document.getElementById('playlistMax');
+    playlistIndexMax.innerText = PLAYLIST.length;
+}
+
+function playCurrentPlaylistVideo() {
+    // Check that a playlist was loaded
+    if (PLAYLIST === null || PLAYLIST_INDEX === null) {
+        console.log("Can't Play Playlist: No playlist loaded")
+        return;
+    }
+
+    // Get the video id
+    let code = processYoutubeUrl(PLAYLIST[PLAYLIST_INDEX]);
+
+    // Use the video id if present
+    if (code !== null) {
+        // Show the current video
+        // showYoutubeVideo(code); # TODO: renable!
+        console.log('PLAYING: ' + code);
+    }
+}
+
+function nextVideo() {
+    // Check that a playlist was loaded
+    if (PLAYLIST === null || PLAYLIST_INDEX === null) {
+        console.log("Can't Play Next Video: No playlist loaded")
+        return;
+    }
+
+    // Check if index is within range
+    if (PLAYLIST_INDEX >= 0 && PLAYLIST_INDEX < (PLAYLIST.length - 1)) {
+        // Iterate the playlist index
+        PLAYLIST_INDEX += 1;
+
+        // Update the playlist controls
+        updatePlaylistControls();
+
+        // Submit the playlist form
+        let playlistForm = document.getElementById('playlistForm');
+        playlistForm.submit();
+    }
+}
+
+function prevVideo() {
+    // Check that a playlist was loaded
+    if (PLAYLIST === null || PLAYLIST_INDEX === null) {
+        console.log("Can't Play Previous Video: No playlist loaded")
+        return;
+    }
+
+    console.log('PREV VIDEO');
+    console.log(PLAYLIST_INDEX, PLAYLIST.length);
 }
