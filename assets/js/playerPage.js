@@ -167,8 +167,7 @@ function playCurrentPlaylistVideo() {
     // Use the video id if present
     if (code !== null) {
         // Show the current video
-        // showYoutubeVideo(code); # TODO: renable!
-        console.log('PLAYING: ' + code);
+        showYoutubeVideo(code);
     }
 }
 

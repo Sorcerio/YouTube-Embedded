@@ -5,7 +5,7 @@
 
 body {
     position: relative;
-    height: 96vh;
+    height: 140vh;
     margin: 0;
     padding: 0px 8px;
 }
@@ -34,4 +34,10 @@ footer > div {
 
 footer > div > p {
     padding-left: 10px;
+}
+
+iframe {
+    display: block;
+    width: 800px;
+    height: 420px;
 }
