@@ -200,6 +200,16 @@ function prevVideo() {
         return;
     }
 
-    console.log('PREV VIDEO');
-    console.log(PLAYLIST_INDEX, PLAYLIST.length);
+    // Check if index is within range
+    if (PLAYLIST_INDEX >= 1) {
+        // Iterate the playlist index
+        PLAYLIST_INDEX -= 1;
+
+        // Update the playlist controls
+        updatePlaylistControls();
+
+        // Submit the playlist form
+        let playlistForm = document.getElementById('playlistForm');
+        playlistForm.submit();
+    }
 }
