@@ -1,6 +1,6 @@
 # YouTube Embedded
 
-![YouTube Embedded header image](./assets/header.png)
+![YouTube Embedded header image](./assets/images/header.png)
 
 >
 > Why? Because there's a loop hole.
